@@ -266,6 +266,15 @@ impl Display for Model {
 #[derive(Debug, Clone, PartialEq, Eq, derive_more::From)]
 pub struct TargetSize(Option<ByteSize>);
 
+impl TargetSize {
+    pub fn in_bytes(&self) -> u64 {
+        match self.0 {
+            Some(s) => s.0,
+            None => 0,
+        }
+    }
+}
+
 impl Display for TargetSize {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self.0 {

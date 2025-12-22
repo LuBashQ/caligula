@@ -129,7 +129,7 @@ impl fmt::Display for ListOption {
 #[tracing::instrument]
 fn enumerate_options(show_all_disks: bool) -> anyhow::Result<Vec<ListOption>> {
     let mut burn_targets: Vec<WriteTarget> = enumerate_devices()
-        .filter(|d| show_all_disks || d.removable == Removable::Yes)
+        .filter(|d| show_all_disks || (d.size.in_bytes() > 0 && d.removable == Removable::Yes))
         .collect();
 
     burn_targets.sort();
